@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container mt-2">
+    <h1 class="mb-4">Liste des Utilisateurs</h1>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Rôles</th>
+                <th>Pseudo</th>
+                <th>Date de naissance</th>
+                <th>Crée le</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.birthdate ? user.birthdate|date('d/m/Y') : '' }}</td>
+                <td>{{ user.createdAt ? user.createdAt|date('d/m/Y') : '' }}</td>
+                <td class="d-inline-block d-flex">
+                    <a class="btn btn-dark mr-2" href="{{ path('users_show', {'id': user.id}) }}">Voir</a>
+                    <a class="btn btn-dark" href="{{ path('users_edit', {'id': user.id}) }}">Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">Aucun utilisateur</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-dark" href="{{ path('users_new') }}">Nouvel utilisateur</a>
+    </div>
+{% endblock %}

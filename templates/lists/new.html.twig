@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'une nouvelle liste{% endblock %}
+
+{% block body %}
+<div class="container w-50 border mt-3">
+    <h1>Création d'une nouvelle liste</h1>
+
+    {{ include('lists/_form.html.twig') }}
+
+    <a class="btn btn-dark" href="{{ path('lists_index') }}">back to list</a>
+</div>
+{% endblock %}

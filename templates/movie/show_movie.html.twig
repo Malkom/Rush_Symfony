@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block body %}
+    <div class="container border mt-2">
+        <h2 class="text-center mt-2 font-weight-bold"><ins>{{ movie.title }}</ins></h2>
+        <table class="table table-borderless d-flex mt-4">
+            <tbody>
+                <tr>
+                    <td rowspan="6"><img src="http://image.tmdb.org/t/p/w185{{ movie.poster_path }}" alt=""></td>
+                    <td><h6>Date de sortie : {{ movie.release_date|date('d/m/Y') }}</h6></td>
+                </tr>
+                <tr>
+                    <td><h6>De : {{ credits.crew.0.name }}</h6></td>
+                </tr>
+                <tr>
+                    <td><h6>Avec : {{ credits.cast.0.name }}, {{ credits.cast.1.name }}, {{ credits.cast.2.name }}, {{ credits.cast.3.name }}...</h6></td>
+                </tr>
+                <tr>
+                    <td><h6>Genre : {{ movie.genres.0.name }}</h6></td>
+                </tr>
+                <tr>
+                    <td><h6>Pays : {{ movie.production_countries.0.name }}</h6></td>
+                </tr>
+                <tr>
+                    <td><h6>Titre original : {{ movie.original_title }}</h6></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container border mt-2">
+        <h4 class=""><ins>Synopsis :</h4></ins>
+        <h6>{{ movie.overview }}</h6>
+    </div>
+
+    <div class="container border mt-2">
+        <h4 class="mb-4"><ins>Trailers :</h4></ins>
+        <div class="row align-self-center">
+            <div class="col">
+                {% if trailers.youtube.0.source is defined %}
+                <iframe width="400" height="315" src="https://www.youtube.com/embed/{{ trailers.youtube.0.source }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+            </div>
+            <div class="col">
+                <iframe width="400" height="315" src="https://www.youtube.com/embed/{{ trailers.youtube.1.source }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+                {% else %}
+                <h6>Pas de trailers pour ce film. </h6>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

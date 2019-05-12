@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        {{ encore_entry_link_tags('app') }}
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <a class="" href="{{ path('home') }}"><img id="logo" src="{{ asset('build/Logo.png') }}" alt="" width="120px"></a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active ml-5">
+                </li>
+                <li class="nav-item active ml-5">
+                    <a class="nav-link" href="{{ path('home') }}">Prochaines Sorties</a>
+                </li>
+            </ul>
+
+            <div class="text-center mr-auto">
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Recherche">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Recherche</button>
+                </form>
+            </div>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <ul class="navbar-nav mr-5">
+                        <li class="nav-item active" id="navbarColor02">
+                            <a class="nav-link" href="{{ path('users_index') }}">Administration</a>
+                        </li>
+                    </ul>
+                {% endif %}
+
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    {{ app.user.username }}
+                    {% else %}
+                    Connexion
+                    {% endif %}
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <a class="dropdown-item" href="{{ path('profile_show', {'id': app.user.id}) }}">Profil</a>
+                        <a class="dropdown-item" href="{{ path('user_lists', {'id': app.user.id}) }}">Vos Listes</a>
+                        <a class="dropdown-item" href="{{ path('lists_index') }}">Listes partagées</a>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% else %}
+                        <a class="dropdown-item" href={{ path('app_login') }}>Connexion</a>
+                        <a class="dropdown-item" href="{{ path('app_register') }}">Enregistrement</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+        {{ encore_entry_script_tags('app') }}
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+     </body>
+</html>

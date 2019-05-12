@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listes personnalisées{% endblock %}
+
+{% block body %}
+<div class="container mt-2">
+    <h1 class="mb-4">Listes personnalisées</h1>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Auteur</th>
+            <th>Partagée</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for list in lists %}
+            <tr>
+                <td>{{ list.id }}</td>
+                <td>{{ list.name }}</td>
+                <td>{{ list.description }}</td>
+                <td>{{ list.authorId.username }}</td>
+                <td>{{ list.partage ? 'Oui' : 'Non' }}</td>
+                <td class="d-inline-block d-flex">
+                    <a class="btn btn-dark mr-2" href="{{ path('lists_show', {'id': list.id}) }}">Voir</a>
+                    <a class="btn btn-dark" href="{{ path('lists_edit', {'id': list.id}) }}">Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune liste personnalisée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a class="btn btn-dark" href="{{ path('lists_new') }}">Nouvelle liste</a>
+    {% endblock %}
